@@ -1,90 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Charu</title>
-
-<link rel="stylesheet" href="style/style.css" />
 
 <style>
 body{
   margin:0;
   overflow:hidden;
-  background: radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
-  font-family: "Inter", sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
+  font-family:"Segoe UI",sans-serif;
+  text-align:center;
+  color:#fff;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  width:800px;
-  height:800px;
-  background: radial-gradient(circle, rgba(255,182,193,0.45), transparent 70%);
-  top:-250px;
-  left:-250px;
-  filter:blur(140px);
-  animation:glowMove 25s ease-in-out infinite alternate;
-  z-index:-2;
+.container{
+  max-width:600px;
+  padding:20px;
 }
 
-@keyframes glowMove{
-  from{transform:translateY(0);}
-  to{transform:translateY(120px);}
+.fade{
+  opacity:0;
+  transform:translateY(20px);
+  transition:all 1.5s ease;
 }
 
-.container *{
-  text-shadow:0 4px 18px rgba(0,0,0,0.28);
+.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-.ghibli-heart{
-  position:absolute;
-  width:26px;
-  height:26px;
-  background: radial-gradient(circle at 30% 30%, #ffb6c9, #e890b2);
-  transform:rotate(45deg);
-  animation:floatHeart 55s ease-in-out infinite;
-  opacity:0.22;
+h1,h2,p{
+  text-shadow:0 4px 20px rgba(0,0,0,0.3);
 }
 
-.ghibli-heart::before,
-.ghibli-heart::after{
-  content:"";
-  position:absolute;
-  width:26px;
-  height:26px;
-  background: radial-gradient(circle at 30% 30%, #ffb6c9, #e890b2);
-  border-radius:50%;
+button{
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  margin:10px;
+  transition:0.3s;
 }
 
-.ghibli-heart::before{top:-13px;left:0;}
-.ghibli-heart::after{left:-13px;top:0;}
-
-@keyframes floatHeart{
-  0%{transform:translateY(110vh) translateX(0) rotate(45deg);}
-  25%{transform:translateY(80vh) translateX(20px) rotate(48deg);}
-  50%{transform:translateY(50vh) translateX(-20px) rotate(42deg);}
-  75%{transform:translateY(20vh) translateX(15px) rotate(46deg);}
-  100%{transform:translateY(-20vh) translateX(0) rotate(45deg);}
+#yesBtn{
+  background:#e890b2;
+  color:white;
 }
 
-.particle{
-  position:absolute;
-  width:10px;
-  height:10px;
-  background:rgba(255,255,255,0.7);
-  border-radius:50%;
-  filter:blur(3px);
-  animation:floatParticle 70s ease-in-out infinite;
-  opacity:0.5;
+#noBtn{
+  background:white;
+  color:#e890b2;
+  position:relative;
 }
 
-@keyframes floatParticle{
-  0%{transform:translateY(110vh);}
-  100%{transform:translateY(-15vh);}
-}
-
-@keyframes shakeNo{
+@keyframes shake{
   0%{transform:translate(0,0);}
   20%{transform:translate(-5px,3px);}
   40%{transform:translate(5px,-3px);}
@@ -94,53 +70,74 @@ body::before{
 }
 
 .no-shake{
-  animation:shakeNo 0.4s ease;
+  animation:shake 0.4s ease;
 }
 
-button{
-  padding:12px 25px;
-  font-size:18px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
+/* floating hearts */
+.heart{
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:#ffb6c9;
+  transform:rotate(45deg);
+  animation:float 20s linear infinite;
+  opacity:0.25;
 }
-#yesBtn{
-  background:#e890b2;
-  color:white;
-  margin-right:20px;
+
+.heart:before,
+.heart:after{
+  content:"";
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:#ffb6c9;
+  border-radius:50%;
 }
-#noBtn{
-  background:white;
-  color:#e890b2;
-  position:relative;
+
+.heart:before{top:-10px;}
+.heart:after{left:-10px;}
+
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(45deg);}
+  100%{transform:translateY(-10vh) rotate(45deg);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="ghibli-heart" style="left:10%; animation-delay:0s;"></div>
-<div class="ghibli-heart" style="left:35%; animation-delay:15s;"></div>
-<div class="ghibli-heart" style="left:60%; animation-delay:30s;"></div>
-<div class="ghibli-heart" style="left:85%; animation-delay:45s;"></div>
+<div class="heart" style="left:10%; animation-delay:0s;"></div>
+<div class="heart" style="left:40%; animation-delay:5s;"></div>
+<div class="heart" style="left:70%; animation-delay:10s;"></div>
 
-<div class="particle" style="left:20%; animation-delay:0s;"></div>
-<div class="particle" style="left:50%; animation-delay:20s;"></div>
-<div class="particle" style="left:75%; animation-delay:40s;"></div>
+<div class="container">
 
-<div class="container" style="text-align:center; margin-top:20vh;">
+<h1 class="fade" id="line1">Hey Charu 🤍</h1>
 
-<h1>Hey Charu 🤍</h1>
-<p>I didn’t plan for any of this. It just happened.</p>
-<p>And since it’s Valentine’s Day…</p>
-<h2>Will you be my Valentine?</h2>
+<p class="fade" id="line2">
+I didn’t plan for any of this. It just happened.
+</p>
 
-<div style="margin-top:30px;">
+<p class="fade" id="line3">
+Somewhere between our conversations, your voice became my comfort.
+</p>
+
+<p class="fade" id="line4">
+And your eyes… even behind those glasses… still win every time.
+</p>
+
+<p class="fade" id="randomLine"></p>
+
+<h2 class="fade" id="line5">
+Will you be my Valentine?
+</h2>
+
+<div class="fade" id="buttons">
 <button id="yesBtn">Yes 🤍</button>
 <button id="noBtn">No</button>
 </div>
 
-<p id="noMessage" style="margin-top:20px;"></p>
+<p id="noMessage"></p>
 
 </div>
 
@@ -148,7 +145,85 @@ button{
 <source src="bg-music.mp3" type="audio/mpeg">
 </audio>
 
-<script src="script/main.js"></script>
+<script>
+const lines = document.querySelectorAll(".fade");
+let delay = 0;
+lines.forEach((el)=>{
+  setTimeout(()=>el.classList.add("show"), delay);
+  delay += 1800;
+});
+
+// random flirting lines
+const flirting = [
+  "You act cold… but you’re secretly the softest person I know.",
+  "Charuuuu… don’t pretend you didn’t see this coming 😌",
+  "Your voice? Dangerous levels of comfort.",
+  "I blame your smile for this entire situation.",
+  "You really thought I wouldn’t fall for you?"
+];
+
+let randomIndex = 0;
+const randomLine = document.getElementById("randomLine");
+
+setInterval(()=>{
+  randomLine.innerText = flirting[randomIndex];
+  randomLine.classList.add("show");
+  randomIndex = (randomIndex + 1) % flirting.length;
+},4000);
+
+// music fade
+const music = document.getElementById("bgm");
+music.volume = 0;
+window.addEventListener("load", ()=>{
+  music.play().catch(()=>{});
+  let vol = 0;
+  const fade = setInterval(()=>{
+    if(vol < 0.25){
+      vol += 0.01;
+      music.volume = vol;
+    } else clearInterval(fade);
+  },150);
+});
+
+// no button chaos
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+let scale = 1;
+let count = 0;
+
+const noTexts = [
+"Why are you saying no 😭",
+"Catch me if you can 🥱",
+"Charuuuu be serious now 😩",
+"You’re enjoying this aren’t you?",
+"Okay okay I surrender 😭"
+];
+
+noBtn.addEventListener("click",(e)=>{
+  e.preventDefault();
+  noBtn.classList.add("no-shake");
+
+  setTimeout(()=>{
+    noBtn.classList.remove("no-shake");
+    noBtn.style.left = (Math.random()*300-150)+"px";
+    noBtn.style.top = (Math.random()*200-100)+"px";
+  },400);
+
+  if(scale>0.5){
+    scale -=0.08;
+    noBtn.style.transform=`scale(${scale})`;
+  }
+
+  document.getElementById("noMessage").innerText =
+    noTexts[count] || noTexts[noTexts.length-1];
+  count++;
+});
+
+yesBtn.addEventListener("click",()=>{
+  document.querySelector(".container").innerHTML=
+  "<h1>You just made me the happiest person alive 🤍</h1><p>I promise I’ll always choose you, Charu.</p>";
+});
+</script>
 
 </body>
 </html>
