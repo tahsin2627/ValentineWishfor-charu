@@ -10,15 +10,11 @@
 <style>
 body{
   margin:0;
-  overflow:hidden;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   background:radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
   font-family:'Cormorant Garamond', serif;
-  text-align:center;
   color:white;
+  scroll-behavior:smooth;
+  overflow-x:hidden;
   transition:background 1.5s ease;
 }
 
@@ -26,35 +22,34 @@ body{
   background:radial-gradient(circle at center, #ff9ecf, #ff6fb5 70%);
 }
 
-.container{
-  max-width:600px;
-  padding:30px;
-  font-size:1.5rem;
+.section{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px;
+  font-size:1.6rem;
   line-height:1.8;
-  letter-spacing:0.5px;
-}
-
-.text{
   opacity:0;
-  transform:translateY(25px);
-  transition:all 1.2s ease;
+  transform:translateY(40px);
+  transition:all 1.4s ease;
 }
 
-.show{
+.section.show{
   opacity:1;
   transform:translateY(0);
 }
 
 button{
-  padding:12px 28px;
+  padding:14px 28px;
   font-size:17px;
   border:none;
   border-radius:30px;
   cursor:pointer;
   margin:10px;
-  transition:0.3s ease;
   font-family:'Quicksand', sans-serif;
-  letter-spacing:0.5px;
+  transition:0.3s ease;
 }
 
 #yesBtn{
@@ -81,34 +76,6 @@ button{
   animation:shake 0.4s ease;
 }
 
-.heart{
-  position:absolute;
-  width:18px;
-  height:18px;
-  background:#ffb6c9;
-  transform:rotate(45deg);
-  animation:float 25s linear infinite;
-  opacity:0.18;
-}
-
-.heart:before,
-.heart:after{
-  content:"";
-  position:absolute;
-  width:18px;
-  height:18px;
-  background:#ffb6c9;
-  border-radius:50%;
-}
-
-.heart:before{top:-9px;}
-.heart:after{left:-9px;}
-
-@keyframes float{
-  0%{transform:translateY(100vh) rotate(45deg);}
-  100%{transform:translateY(-10vh) rotate(45deg);}
-}
-
 h1,h2,p{
   text-shadow:0 6px 25px rgba(0,0,0,0.35);
 }
@@ -117,13 +84,34 @@ h1,h2,p{
 
 <body>
 
-<div class="heart" style="left:10%;animation-delay:0s;"></div>
-<div class="heart" style="left:50%;animation-delay:8s;"></div>
-<div class="heart" style="left:80%;animation-delay:15s;"></div>
+<div class="section">Charuuuu 🤍</div>
 
-<div class="container">
-<div id="content" class="text"></div>
-<div id="buttons" style="margin-top:35px;"></div>
+<div class="section">
+You act so innocent and cold… but your voice is the softest place I know.
+</div>
+
+<div class="section">
+Even behind those glasses… your eyes still win every single time.
+</div>
+
+<div class="section">
+It’s been almost a year of us talking… and somewhere in between, you became my comfort.
+</div>
+
+<div class="section">
+I didn’t plan this. I didn’t force this. It just happened.
+</div>
+
+<div class="section">
+And I don’t want to pretend anymore.
+</div>
+
+<div class="section">
+<h2>Will you be my Valentine?</h2>
+<div style="margin-top:30px;">
+<button id="yesBtn">Yes 🤍</button>
+<button id="noBtn">No</button>
+</div>
 <p id="noMessage" style="margin-top:20px;"></p>
 </div>
 
@@ -132,107 +120,79 @@ h1,h2,p{
 </audio>
 
 <script>
-const lines = [
+// Fade sections on scroll
+const sections = document.querySelectorAll('.section');
 
-"Charuuuu 🤍",
-
-"You act so innocent and cold… but your voice is the softest place I know.",
-
-"Even behind those glasses… your eyes still win every single time.",
-
-"It’s been almost a year of us talking… and somewhere in between, you became my comfort.",
-
-"I didn’t plan this. I didn’t force this. It just happened.",
-
-"And I don’t want to pretend anymore.",
-
-"Will you be my Valentine?"
-];
-
-let index = 0;
-const content = document.getElementById("content");
-const buttons = document.getElementById("buttons");
-const noMessage = document.getElementById("noMessage");
-
-function showNext(){
-  if(index < lines.length){
-    content.classList.remove("show");
-    setTimeout(()=>{
-      content.innerText = lines[index];
-      content.classList.add("show");
-      index++;
-    },300);
-  }
-
-  if(index === lines.length){
-    setTimeout(()=>{
-      buttons.innerHTML = `
-        <button id="yesBtn">Yes 🤍</button>
-        <button id="noBtn">No</button>
-      `;
-      addButtonLogic();
-    },1000);
-  }
+function reveal(){
+  sections.forEach(sec=>{
+    const rect = sec.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 100){
+      sec.classList.add('show');
+    }
+  });
 }
 
-document.body.addEventListener("click",()=>{
-  if(index === 0) fadeMusic();
-  showNext();
+window.addEventListener('scroll', reveal);
+reveal();
+
+// Music fade-in on first scroll
+const music = document.getElementById("bgm");
+let musicStarted = false;
+
+window.addEventListener("scroll", ()=>{
+  if(!musicStarted){
+    music.volume = 0;
+    music.play().catch(()=>{});
+    let vol = 0;
+    const fade = setInterval(()=>{
+      if(vol < 0.25){
+        vol += 0.01;
+        music.volume = vol;
+      } else clearInterval(fade);
+    },150);
+    musicStarted = true;
+  }
 });
 
-function fadeMusic(){
-  const music = document.getElementById("bgm");
-  music.volume = 0;
-  music.play().catch(()=>{});
-  let vol = 0;
-  const fade = setInterval(()=>{
-    if(vol < 0.25){
-      vol += 0.01;
-      music.volume = vol;
-    } else clearInterval(fade);
-  },150);
-}
+// No button chaos
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const noMessage = document.getElementById("noMessage");
 
-function addButtonLogic(){
-  const yesBtn = document.getElementById("yesBtn");
-  const noBtn = document.getElementById("noBtn");
+let scale = 1;
+let count = 0;
 
-  let scale = 1;
-  let count = 0;
-  const noTexts = [
-    "Why are you saying no 😭",
-    "Catch me if you can 🥱",
-    "Charuuuu don’t do this 😩",
-    "You’re enjoying this aren’t you?",
-    "Okay okay I surrender 😭"
-  ];
+const noTexts = [
+"Why are you saying no 😭",
+"Catch me if you can 🥱",
+"Charuuuu don’t do this 😩",
+"You’re enjoying this aren’t you?",
+"Okay okay I surrender 😭"
+];
 
-  noBtn.addEventListener("click",(e)=>{
-    e.stopPropagation();
-    noBtn.classList.add("no-shake");
-    setTimeout(()=>{
-      noBtn.classList.remove("no-shake");
-      noBtn.style.left = (Math.random()*200-100)+"px";
-      noBtn.style.top = (Math.random()*150-75)+"px";
-    },400);
+noBtn.addEventListener("click",(e)=>{
+  e.stopPropagation();
+  noBtn.classList.add("no-shake");
+  setTimeout(()=>{
+    noBtn.classList.remove("no-shake");
+    noBtn.style.left = (Math.random()*200-100)+"px";
+    noBtn.style.top = (Math.random()*150-75)+"px";
+  },400);
 
-    if(scale > 0.5){
-      scale -= 0.08;
-      noBtn.style.transform = `scale(${scale})`;
-    }
+  if(scale > 0.5){
+    scale -= 0.08;
+    noBtn.style.transform = `scale(${scale})`;
+  }
 
-    noMessage.innerText = noTexts[count] || noTexts[noTexts.length-1];
-    count++;
-  });
+  noMessage.innerText = noTexts[count] || noTexts[noTexts.length-1];
+  count++;
+});
 
-  yesBtn.addEventListener("click",(e)=>{
-    e.stopPropagation();
-    document.body.classList.add("glow-bg");
-    content.innerText = "You just made me the happiest person alive 🤍";
-    buttons.innerHTML = "";
-    noMessage.innerText = "";
-  });
-}
+yesBtn.addEventListener("click",(e)=>{
+  e.stopPropagation();
+  document.body.classList.add("glow-bg");
+  noMessage.innerText = "";
+});
 </script>
 
 </body>
