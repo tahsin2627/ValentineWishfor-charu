@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,12 @@ body{
   background:radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
   font-family:"Segoe UI",sans-serif;
   text-align:center;
-  color:#fff;
+  color:white;
+  transition:background 1.5s ease;
+}
+
+.glow-bg{
+  background:radial-gradient(circle at center, #ff9ecf, #ff6fb5 70%);
 }
 
 .container{
@@ -24,19 +29,15 @@ body{
   padding:20px;
 }
 
-.fade{
+.text{
   opacity:0;
-  transform:translateY(20px);
-  transition:all 1.5s ease;
+  transform:translateY(25px);
+  transition:all 1.2s ease;
 }
 
 .show{
   opacity:1;
   transform:translateY(0);
-}
-
-h1,h2,p{
-  text-shadow:0 4px 20px rgba(0,0,0,0.3);
 }
 
 button{
@@ -50,13 +51,13 @@ button{
 }
 
 #yesBtn{
-  background:#e890b2;
-  color:white;
+  background:#ffffff;
+  color:#ff6fb5;
 }
 
 #noBtn{
-  background:white;
-  color:#e890b2;
+  background:#ff6fb5;
+  color:white;
   position:relative;
 }
 
@@ -73,29 +74,28 @@ button{
   animation:shake 0.4s ease;
 }
 
-/* floating hearts */
 .heart{
   position:absolute;
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
   background:#ffb6c9;
   transform:rotate(45deg);
-  animation:float 20s linear infinite;
-  opacity:0.25;
+  animation:float 25s linear infinite;
+  opacity:0.2;
 }
 
 .heart:before,
 .heart:after{
   content:"";
   position:absolute;
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
   background:#ffb6c9;
   border-radius:50%;
 }
 
-.heart:before{top:-10px;}
-.heart:after{left:-10px;}
+.heart:before{top:-9px;}
+.heart:after{left:-9px;}
 
 @keyframes float{
   0%{transform:translateY(100vh) rotate(45deg);}
@@ -106,39 +106,14 @@ button{
 
 <body>
 
-<div class="heart" style="left:10%; animation-delay:0s;"></div>
-<div class="heart" style="left:40%; animation-delay:5s;"></div>
-<div class="heart" style="left:70%; animation-delay:10s;"></div>
+<div class="heart" style="left:10%;animation-delay:0s;"></div>
+<div class="heart" style="left:50%;animation-delay:8s;"></div>
+<div class="heart" style="left:80%;animation-delay:15s;"></div>
 
 <div class="container">
-
-<h1 class="fade" id="line1">Hey Charu 🤍</h1>
-
-<p class="fade" id="line2">
-I didn’t plan for any of this. It just happened.
-</p>
-
-<p class="fade" id="line3">
-Somewhere between our conversations, your voice became my comfort.
-</p>
-
-<p class="fade" id="line4">
-And your eyes… even behind those glasses… still win every time.
-</p>
-
-<p class="fade" id="randomLine"></p>
-
-<h2 class="fade" id="line5">
-Will you be my Valentine?
-</h2>
-
-<div class="fade" id="buttons">
-<button id="yesBtn">Yes 🤍</button>
-<button id="noBtn">No</button>
-</div>
-
+<div id="content" class="text"></div>
+<div id="buttons" style="margin-top:30px;"></div>
 <p id="noMessage"></p>
-
 </div>
 
 <audio id="bgm" loop>
@@ -146,35 +121,57 @@ Will you be my Valentine?
 </audio>
 
 <script>
-const lines = document.querySelectorAll(".fade");
-let delay = 0;
-lines.forEach((el)=>{
-  setTimeout(()=>el.classList.add("show"), delay);
-  delay += 1800;
-});
+const lines = [
 
-// random flirting lines
-const flirting = [
-  "You act cold… but you’re secretly the softest person I know.",
-  "Charuuuu… don’t pretend you didn’t see this coming 😌",
-  "Your voice? Dangerous levels of comfort.",
-  "I blame your smile for this entire situation.",
-  "You really thought I wouldn’t fall for you?"
+"Charuuuu 🤍",
+
+"You act so cold and innocent… but you have no idea what your voice does to me.",
+
+"Even behind those glasses… your eyes still win every single time.",
+
+"It’s been almost a year of us talking… and somewhere in between, you became my comfort.",
+
+"I didn’t plan this. I didn’t force this. It just… happened.",
+
+"And I don’t want to pretend anymore.",
+
+"Will you be my Valentine?"
 ];
 
-let randomIndex = 0;
-const randomLine = document.getElementById("randomLine");
+let index = 0;
+const content = document.getElementById("content");
+const buttons = document.getElementById("buttons");
+const noMessage = document.getElementById("noMessage");
 
-setInterval(()=>{
-  randomLine.innerText = flirting[randomIndex];
-  randomLine.classList.add("show");
-  randomIndex = (randomIndex + 1) % flirting.length;
-},4000);
+function showNext(){
+  if(index < lines.length){
+    content.classList.remove("show");
+    setTimeout(()=>{
+      content.innerText = lines[index];
+      content.classList.add("show");
+      index++;
+    },300);
+  }
 
-// music fade
-const music = document.getElementById("bgm");
-music.volume = 0;
-window.addEventListener("load", ()=>{
+  if(index === lines.length){
+    setTimeout(()=>{
+      buttons.innerHTML = `
+        <button id="yesBtn">Yes 🤍</button>
+        <button id="noBtn">No</button>
+      `;
+      addButtonLogic();
+    },1000);
+  }
+}
+
+document.body.addEventListener("click",()=>{
+  if(index === 0) fadeMusic();
+  showNext();
+});
+
+function fadeMusic(){
+  const music = document.getElementById("bgm");
+  music.volume = 0;
   music.play().catch(()=>{});
   let vol = 0;
   const fade = setInterval(()=>{
@@ -183,46 +180,48 @@ window.addEventListener("load", ()=>{
       music.volume = vol;
     } else clearInterval(fade);
   },150);
-});
+}
 
-// no button chaos
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-let scale = 1;
-let count = 0;
+function addButtonLogic(){
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
 
-const noTexts = [
-"Why are you saying no 😭",
-"Catch me if you can 🥱",
-"Charuuuu be serious now 😩",
-"You’re enjoying this aren’t you?",
-"Okay okay I surrender 😭"
-];
+  let scale = 1;
+  let count = 0;
+  const noTexts = [
+    "Why are you saying no 😭",
+    "Catch me if you can 🥱",
+    "Charuuuu don’t do this 😩",
+    "You’re enjoying this aren’t you?",
+    "Okay okay I surrender 😭"
+  ];
 
-noBtn.addEventListener("click",(e)=>{
-  e.preventDefault();
-  noBtn.classList.add("no-shake");
+  noBtn.addEventListener("click",(e)=>{
+    e.stopPropagation();
+    noBtn.classList.add("no-shake");
+    setTimeout(()=>{
+      noBtn.classList.remove("no-shake");
+      noBtn.style.left = (Math.random()*200-100)+"px";
+      noBtn.style.top = (Math.random()*150-75)+"px";
+    },400);
 
-  setTimeout(()=>{
-    noBtn.classList.remove("no-shake");
-    noBtn.style.left = (Math.random()*300-150)+"px";
-    noBtn.style.top = (Math.random()*200-100)+"px";
-  },400);
+    if(scale > 0.5){
+      scale -= 0.08;
+      noBtn.style.transform = `scale(${scale})`;
+    }
 
-  if(scale>0.5){
-    scale -=0.08;
-    noBtn.style.transform=`scale(${scale})`;
-  }
+    noMessage.innerText = noTexts[count] || noTexts[noTexts.length-1];
+    count++;
+  });
 
-  document.getElementById("noMessage").innerText =
-    noTexts[count] || noTexts[noTexts.length-1];
-  count++;
-});
-
-yesBtn.addEventListener("click",()=>{
-  document.querySelector(".container").innerHTML=
-  "<h1>You just made me the happiest person alive 🤍</h1><p>I promise I’ll always choose you, Charu.</p>";
-});
+  yesBtn.addEventListener("click",(e)=>{
+    e.stopPropagation();
+    document.body.classList.add("glow-bg");
+    content.innerText = "You just made me the happiest person alive 🤍";
+    buttons.innerHTML = "";
+    noMessage.innerText = "";
+  });
+}
 </script>
 
 </body>
