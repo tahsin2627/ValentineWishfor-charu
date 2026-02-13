@@ -2,55 +2,131 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>For Charu</title>
 
-<link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
 <link rel="stylesheet" href="style/style.css" />
 
 <style>
-/* Deep blush background */
+
+/* ===== Deep Dreamy Blush Background ===== */
 body {
-  background: linear-gradient(135deg, #f5b5c8, #f9d6e2);
+  margin: 0;
+  background: radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
   overflow: hidden;
+}
+
+/* Soft cinematic glow */
+body::before {
+  content: "";
+  position: fixed;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(255,182,193,0.45), transparent 70%);
+  top: -250px;
+  left: -250px;
+  filter: blur(140px);
+  animation: glowMove 25s ease-in-out infinite alternate;
+  z-index: -2;
+}
+
+@keyframes glowMove {
+  from { transform: translateY(0px); }
+  to { transform: translateY(120px); }
 }
 
 /* Text readability */
 .container * {
-  text-shadow: 0px 4px 15px rgba(0,0,0,0.25);
+  text-shadow: 0px 4px 18px rgba(0,0,0,0.28);
 }
 
-/* Background love image */
-.love-bg {
-  position: fixed;
-  inset: 0;
-  background: url("img/loveattack.jpg") center center / cover no-repeat;
-  opacity: 0;
-  transition: opacity 6s ease;
-  z-index: -2;
+/* ===== Dreamy Ghibli Hearts ===== */
+.ghibli-heart {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background: radial-gradient(circle at 30% 30%, #ffb6c9, #e890b2);
+  transform: rotate(45deg);
+  animation: floatHeart 55s ease-in-out infinite;
+  opacity: 0.22;
 }
 
-/* Soft overlay to keep text readable */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 214, 226, 0.75);
-  backdrop-filter: blur(6px);
-  z-index: -1;
+.ghibli-heart::before,
+.ghibli-heart::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background: radial-gradient(circle at 30% 30%, #ffb6c9, #e890b2);
+  border-radius: 50%;
 }
+
+.ghibli-heart::before {
+  top: -13px;
+  left: 0;
+}
+
+.ghibli-heart::after {
+  left: -13px;
+  top: 0;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(110vh) translateX(0px) rotate(45deg);
+  }
+  25% {
+    transform: translateY(80vh) translateX(20px) rotate(48deg);
+  }
+  50% {
+    transform: translateY(50vh) translateX(-20px) rotate(42deg);
+  }
+  75% {
+    transform: translateY(20vh) translateX(15px) rotate(46deg);
+  }
+  100% {
+    transform: translateY(-20vh) translateX(0px) rotate(45deg);
+  }
+}
+
+/* ===== Soft Floating Light Particles ===== */
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  filter: blur(3px);
+  animation: floatParticle 70s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(110vh); }
+  100% { transform: translateY(-15vh); }
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="love-bg" id="loveBg"></div>
-<div class="overlay"></div>
+<!-- Dreamy Hearts -->
+<div class="ghibli-heart" style="left:10%; animation-delay:0s;"></div>
+<div class="ghibli-heart" style="left:35%; animation-delay:15s;"></div>
+<div class="ghibli-heart" style="left:60%; animation-delay:30s;"></div>
+<div class="ghibli-heart" style="left:85%; animation-delay:45s;"></div>
+
+<!-- Light Particles -->
+<div class="particle" style="left:20%; animation-delay:0s;"></div>
+<div class="particle" style="left:50%; animation-delay:20s;"></div>
+<div class="particle" style="left:75%; animation-delay:40s;"></div>
 
 <div class="container">
+
   <div class="one">
     <h1 class="one">
-      Hey
-      <span id="name">Charu</span>
+      Hey <span id="name">Charu</span>
     </h1>
     <p class="two" id="greetingText">
       I’ve been meaning to say something.
@@ -78,8 +154,7 @@ body {
     </p>
     <p class="idea-4">Somewhere in between…</p>
     <p class="idea-5">
-      You became special
-      <span>🤍</span>
+      You became special <span>🤍</span>
     </p>
     <p class="idea-6">
       <span>T</span>
@@ -88,11 +163,10 @@ body {
   </div>
 
   <div class="six">
-    <img src="img/yourimage.jpg" alt="" class="girl-dp" id="imagePath" />
     <div class="wish">
       <h3 class="wish-hbd">Happy Valentine’s Day</h3>
       <h5 id="wishText">
-        I didn’t plan for any of this. It just happened. And it’s you.
+        I didn’t plan for any of this. It just happened.
         <br><br>
         Will you be my Valentine?
       </h5>
@@ -104,6 +178,7 @@ body {
     <p id="replay">Click if you want to see it again.</p>
     <p class="last-smile">🤍</p>
   </div>
+
 </div>
 
 <!-- Background Music -->
@@ -116,17 +191,8 @@ body {
 <script type="text/babel" src="script/main.js"></script>
 
 <script>
-/* Slowly reveal background love image */
-window.addEventListener("load", function() {
-  setTimeout(() => {
-    document.getElementById("loveBg").style.opacity = "0.35";
-  }, 6000);
-});
-
-/* Auto play music gently */
 const music = document.getElementById("bgm");
 music.volume = 0.25;
-
 document.addEventListener("click", () => {
   if (music.paused) music.play();
 }, { once: true });
