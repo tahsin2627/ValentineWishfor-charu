@@ -5,35 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Charu</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
-  background:radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
-  font-family:'Cormorant Garamond', serif;
+  background:radial-gradient(circle at 30% 30%, #e7a9bc, #f2c3d2 60%, #f6dce5);
+  font-family:'Playfair Display', serif;
   color:white;
-  scroll-behavior:smooth;
   overflow-x:hidden;
   transition:background 1.5s ease;
 }
 
-.glow-bg{
+.glow{
   background:radial-gradient(circle at center, #ff9ecf, #ff6fb5 70%);
 }
 
 .section{
-  min-height:100vh;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   text-align:center;
   padding:40px;
-  font-size:1.6rem;
-  line-height:1.8;
   opacity:0;
   transform:translateY(40px);
-  transition:all 1.4s ease;
+  transition:all 1.2s ease;
 }
 
 .section.show{
@@ -41,14 +38,31 @@ body{
   transform:translateY(0);
 }
 
+.content{
+  max-width:650px;
+  font-size:2rem;
+  line-height:1.6;
+  text-shadow:0 6px 25px rgba(0,0,0,0.35);
+}
+
+.valentine{
+  font-size:3.2rem;
+  margin-bottom:40px;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+}
+
 button{
-  padding:14px 28px;
-  font-size:17px;
+  padding:15px 35px;
   border:none;
-  border-radius:30px;
-  cursor:pointer;
-  margin:10px;
+  border-radius:40px;
+  font-size:18px;
   font-family:'Quicksand', sans-serif;
+  cursor:pointer;
   transition:0.3s ease;
 }
 
@@ -75,44 +89,46 @@ button{
 .no-shake{
   animation:shake 0.4s ease;
 }
-
-h1,h2,p{
-  text-shadow:0 6px 25px rgba(0,0,0,0.35);
-}
 </style>
 </head>
 
 <body>
 
-<div class="section">Charuuuu 🤍</div>
+<div class="section"><div class="content">Charuuuu 🤍</div></div>
 
 <div class="section">
+<div class="content">
 You act so innocent and cold… but your voice is the softest place I know.
 </div>
+</div>
 
 <div class="section">
+<div class="content">
 Even behind those glasses… your eyes still win every single time.
 </div>
+</div>
 
 <div class="section">
+<div class="content">
 It’s been almost a year of us talking… and somewhere in between, you became my comfort.
 </div>
+</div>
 
 <div class="section">
+<div class="content">
 I didn’t plan this. I didn’t force this. It just happened.
 </div>
-
-<div class="section">
-And I don’t want to pretend anymore.
 </div>
 
 <div class="section">
-<h2>Will you be my Valentine?</h2>
-<div style="margin-top:30px;">
+<div class="content valentine">
+Will you be my Valentine?
+<div class="buttons">
 <button id="yesBtn">Yes 🤍</button>
 <button id="noBtn">No</button>
 </div>
-<p id="noMessage" style="margin-top:20px;"></p>
+<p id="noMessage" style="margin-top:25px;font-size:1.2rem;"></p>
+</div>
 </div>
 
 <audio id="bgm" loop>
@@ -120,7 +136,7 @@ And I don’t want to pretend anymore.
 </audio>
 
 <script>
-// Fade sections on scroll
+// Reveal on scroll
 const sections = document.querySelectorAll('.section');
 
 function reveal(){
@@ -131,28 +147,31 @@ function reveal(){
     }
   });
 }
-
 window.addEventListener('scroll', reveal);
 reveal();
 
-// Music fade-in on first scroll
+// MOBILE SAFE MUSIC
 const music = document.getElementById("bgm");
-let musicStarted = false;
+let started = false;
 
-window.addEventListener("scroll", ()=>{
-  if(!musicStarted){
+function startMusic(){
+  if(!started){
     music.volume = 0;
-    music.play().catch(()=>{});
-    let vol = 0;
-    const fade = setInterval(()=>{
-      if(vol < 0.25){
-        vol += 0.01;
-        music.volume = vol;
-      } else clearInterval(fade);
-    },150);
-    musicStarted = true;
+    music.play().then(()=>{
+      let vol = 0;
+      const fade = setInterval(()=>{
+        if(vol < 0.25){
+          vol += 0.01;
+          music.volume = vol;
+        } else clearInterval(fade);
+      },150);
+    });
+    started = true;
   }
-});
+}
+
+document.addEventListener("touchstart", startMusic, {once:true});
+document.addEventListener("click", startMusic, {once:true});
 
 // No button chaos
 const noBtn = document.getElementById("noBtn");
@@ -161,7 +180,6 @@ const noMessage = document.getElementById("noMessage");
 
 let scale = 1;
 let count = 0;
-
 const noTexts = [
 "Why are you saying no 😭",
 "Catch me if you can 🥱",
@@ -173,6 +191,7 @@ const noTexts = [
 noBtn.addEventListener("click",(e)=>{
   e.stopPropagation();
   noBtn.classList.add("no-shake");
+
   setTimeout(()=>{
     noBtn.classList.remove("no-shake");
     noBtn.style.left = (Math.random()*200-100)+"px";
@@ -190,7 +209,7 @@ noBtn.addEventListener("click",(e)=>{
 
 yesBtn.addEventListener("click",(e)=>{
   e.stopPropagation();
-  document.body.classList.add("glow-bg");
+  document.body.classList.add("glow");
   noMessage.innerText = "";
 });
 </script>
