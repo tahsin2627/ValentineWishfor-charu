@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Charu</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 body{
   margin:0;
@@ -14,7 +16,7 @@ body{
   justify-content:center;
   align-items:center;
   background:radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
-  font-family:"Segoe UI",sans-serif;
+  font-family:'Cormorant Garamond', serif;
   text-align:center;
   color:white;
   transition:background 1.5s ease;
@@ -26,7 +28,10 @@ body{
 
 .container{
   max-width:600px;
-  padding:20px;
+  padding:30px;
+  font-size:1.5rem;
+  line-height:1.8;
+  letter-spacing:0.5px;
 }
 
 .text{
@@ -41,17 +46,19 @@ body{
 }
 
 button{
-  padding:12px 25px;
-  font-size:18px;
+  padding:12px 28px;
+  font-size:17px;
   border:none;
-  border-radius:25px;
+  border-radius:30px;
   cursor:pointer;
   margin:10px;
-  transition:0.3s;
+  transition:0.3s ease;
+  font-family:'Quicksand', sans-serif;
+  letter-spacing:0.5px;
 }
 
 #yesBtn{
-  background:#ffffff;
+  background:white;
   color:#ff6fb5;
 }
 
@@ -81,7 +88,7 @@ button{
   background:#ffb6c9;
   transform:rotate(45deg);
   animation:float 25s linear infinite;
-  opacity:0.2;
+  opacity:0.18;
 }
 
 .heart:before,
@@ -101,6 +108,10 @@ button{
   0%{transform:translateY(100vh) rotate(45deg);}
   100%{transform:translateY(-10vh) rotate(45deg);}
 }
+
+h1,h2,p{
+  text-shadow:0 6px 25px rgba(0,0,0,0.35);
+}
 </style>
 </head>
 
@@ -112,8 +123,8 @@ button{
 
 <div class="container">
 <div id="content" class="text"></div>
-<div id="buttons" style="margin-top:30px;"></div>
-<p id="noMessage"></p>
+<div id="buttons" style="margin-top:35px;"></div>
+<p id="noMessage" style="margin-top:20px;"></p>
 </div>
 
 <audio id="bgm" loop>
@@ -125,13 +136,13 @@ const lines = [
 
 "Charuuuu 🤍",
 
-"You act so cold and innocent… but you have no idea what your voice does to me.",
+"You act so innocent and cold… but your voice is the softest place I know.",
 
 "Even behind those glasses… your eyes still win every single time.",
 
 "It’s been almost a year of us talking… and somewhere in between, you became my comfort.",
 
-"I didn’t plan this. I didn’t force this. It just… happened.",
+"I didn’t plan this. I didn’t force this. It just happened.",
 
 "And I don’t want to pretend anymore.",
 
