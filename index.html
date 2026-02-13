@@ -8,15 +8,12 @@
 <link rel="stylesheet" href="style/style.css" />
 
 <style>
-
-/* ===== Deep Dreamy Blush Background ===== */
 body {
   margin: 0;
   background: radial-gradient(circle at 30% 30%, #e8a8bc, #f3c1d3 60%, #f8dce6);
   overflow: hidden;
 }
 
-/* Soft cinematic glow */
 body::before {
   content: "";
   position: fixed;
@@ -35,12 +32,10 @@ body::before {
   to { transform: translateY(120px); }
 }
 
-/* Text readability */
 .container * {
   text-shadow: 0px 4px 18px rgba(0,0,0,0.28);
 }
 
-/* ===== Dreamy Ghibli Hearts ===== */
 .ghibli-heart {
   position: absolute;
   width: 26px;
@@ -61,35 +56,17 @@ body::before {
   border-radius: 50%;
 }
 
-.ghibli-heart::before {
-  top: -13px;
-  left: 0;
-}
-
-.ghibli-heart::after {
-  left: -13px;
-  top: 0;
-}
+.ghibli-heart::before { top: -13px; left: 0; }
+.ghibli-heart::after { left: -13px; top: 0; }
 
 @keyframes floatHeart {
-  0% {
-    transform: translateY(110vh) translateX(0px) rotate(45deg);
-  }
-  25% {
-    transform: translateY(80vh) translateX(20px) rotate(48deg);
-  }
-  50% {
-    transform: translateY(50vh) translateX(-20px) rotate(42deg);
-  }
-  75% {
-    transform: translateY(20vh) translateX(15px) rotate(46deg);
-  }
-  100% {
-    transform: translateY(-20vh) translateX(0px) rotate(45deg);
-  }
+  0% { transform: translateY(110vh) translateX(0px) rotate(45deg); }
+  25% { transform: translateY(80vh) translateX(20px) rotate(48deg); }
+  50% { transform: translateY(50vh) translateX(-20px) rotate(42deg); }
+  75% { transform: translateY(20vh) translateX(15px) rotate(46deg); }
+  100% { transform: translateY(-20vh) translateX(0px) rotate(45deg); }
 }
 
-/* ===== Soft Floating Light Particles ===== */
 .particle {
   position: absolute;
   width: 10px;
@@ -105,19 +82,18 @@ body::before {
   0% { transform: translateY(110vh); }
   100% { transform: translateY(-15vh); }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- Dreamy Hearts -->
+<!-- Dreamy hearts -->
 <div class="ghibli-heart" style="left:10%; animation-delay:0s;"></div>
 <div class="ghibli-heart" style="left:35%; animation-delay:15s;"></div>
 <div class="ghibli-heart" style="left:60%; animation-delay:30s;"></div>
 <div class="ghibli-heart" style="left:85%; animation-delay:45s;"></div>
 
-<!-- Light Particles -->
+<!-- Light particles -->
 <div class="particle" style="left:20%; animation-delay:0s;"></div>
 <div class="particle" style="left:50%; animation-delay:20s;"></div>
 <div class="particle" style="left:75%; animation-delay:40s;"></div>
@@ -182,7 +158,7 @@ body::before {
 </div>
 
 <!-- Background Music -->
-<audio id="bgm" autoplay loop>
+<audio id="bgm" loop>
   <source src="bg-music.mp3" type="audio/mpeg">
 </audio>
 
@@ -193,9 +169,14 @@ body::before {
 <script>
 const music = document.getElementById("bgm");
 music.volume = 0.25;
-document.addEventListener("click", () => {
-  if (music.paused) music.play();
-}, { once: true });
+
+window.addEventListener("load", () => {
+  music.play().catch(() => {
+    document.addEventListener("click", () => {
+      music.play();
+    }, { once: true });
+  });
+});
 </script>
 
 </body>
